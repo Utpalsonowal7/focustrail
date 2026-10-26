@@ -1,0 +1,10 @@
+export const schema = `
+CREATE TABLE IF NOT EXISTS tasks(id TEXT PRIMARY KEY,title TEXT NOT NULL,notes TEXT NOT NULL DEFAULT '',priority TEXT NOT NULL CHECK(priority IN ('low','medium','high')),due TEXT NOT NULL DEFAULT '',done INTEGER NOT NULL DEFAULT 0 CHECK(done IN (0,1)),completed_on TEXT,created_at INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS habits(id TEXT PRIMARY KEY,title TEXT NOT NULL,created_on TEXT NOT NULL,archived INTEGER NOT NULL DEFAULT 0 CHECK(archived IN (0,1)));
+CREATE TABLE IF NOT EXISTS checkins(habit_id TEXT NOT NULL REFERENCES habits(id) ON DELETE CASCADE,day TEXT NOT NULL,PRIMARY KEY(habit_id,day));
+CREATE TABLE IF NOT EXISTS sessions(id TEXT PRIMARY KEY,task_id TEXT REFERENCES tasks(id) ON DELETE SET NULL,seconds INTEGER NOT NULL CHECK(seconds>0),day TEXT NOT NULL,ended_at INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS timer(slot INTEGER PRIMARY KEY CHECK(slot=1),id TEXT NOT NULL,task_id TEXT REFERENCES tasks(id) ON DELETE SET NULL,duration INTEGER NOT NULL CHECK(duration>0),remaining INTEGER NOT NULL CHECK(remaining>=0),deadline INTEGER,kind TEXT NOT NULL CHECK(kind IN ('focus','break')));
+CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY,value TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS sessions_day ON sessions(day);
+CREATE INDEX IF NOT EXISTS checkins_day ON checkins(day);
+`;
