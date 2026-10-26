@@ -1,0 +1,1 @@
+{"expo":{"name":"FocusTrail","slug":"focustrail","version":"1.0.0","orientation":"portrait","userInterfaceStyle":"dark","scheme":"focustrail","ios":{"supportsTablet":true,"bundleIdentifier":"in.utpx.focustrail"},"android":{"package":"in.utpx.focustrail"},"plugins":["expo-sqlite"],"platforms":["ios","android"]}}
