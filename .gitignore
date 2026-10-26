@@ -1,0 +1,15 @@
+node_modules/
+.expo/
+dist/
+coverage/
+android/
+ios/
+*.jks
+*.keystore
+*.p8
+*.p12
+*.mobileprovision
+.env
+.env.*
+*.tsbuildinfo
+.DS_Store
