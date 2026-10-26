@@ -1,2 +1,64 @@
-import { Alert,Pressable,View } from 'react-native';import type { Task } from '../../types/models';import { Card } from '../../components/Card';import { Text,Muted } from '../../components/Text';import { Button } from '../../components/Button';import { useData } from '../../providers/DataProvider';import { toggleTask,deleteTask } from '../../db/tasks';import { colors } from '../../theme/tokens';
-export function TaskCard({task,onEdit}:{task:Task;onEdit:()=>void}){const {run,busy}=useData();return <Card><View style={{flexDirection:'row',gap:12,alignItems:'center'}}><Pressable accessibilityRole="checkbox" accessibilityState={{checked:!!task.done,disabled:busy}} accessibilityLabel={`Complete ${task.title}`} disabled={busy} onPress={()=>void run(db=>toggleTask(db,task.id))} style={{padding:12,backgroundColor:colors.raised,borderRadius:12}}><Text>{task.done?'✓':'○'}</Text></Pressable><View style={{flex:1}}><Text style={{textDecorationLine:task.done?'line-through':'none'}}>{task.title}</Text><Muted>{task.priority} priority{task.due?` · ${task.due}`:''}</Muted></View></View>{!!task.notes&&<Muted>{task.notes}</Muted>}<View style={{flexDirection:'row',gap:8}}><Button label="Edit" secondary onPress={onEdit}/><Button label="Delete" secondary disabled={busy} onPress={()=>Alert.alert('Delete task?','Session history is kept without this task link.',[{text:'Cancel',style:'cancel'},{text:'Delete',style:'destructive',onPress:()=>void run(db=>deleteTask(db,task.id))}])}/></View></Card>;}
+import { Alert, Pressable, View } from 'react-native';
+import type { Task } from '../../types/models';
+import { Card } from '../../components/Card';
+import { Text, Muted } from '../../components/Text';
+import { Button } from '../../components/Button';
+import { useData } from '../../providers/DataProvider';
+import { toggleTask, deleteTask } from '../../db/tasks';
+import { colors } from '../../theme/tokens';
+export function TaskCard({ task, onEdit }: { task: Task; onEdit: () => void }) {
+  const { run, busy } = useData();
+  return (
+    <Card>
+      <View style={{ flexDirection: 'row', gap: 12, alignItems: 'center' }}>
+        <Pressable
+          accessibilityRole="checkbox"
+          accessibilityState={{ checked: !!task.done, disabled: busy }}
+          accessibilityLabel={`Complete ${task.title}`}
+          disabled={busy}
+          onPress={() => void run((db) => toggleTask(db, task.id))}
+          style={{
+            padding: 12,
+            backgroundColor: colors.raised,
+            borderRadius: 12,
+          }}
+        >
+          <Text>{task.done ? '✓' : '○'}</Text>
+        </Pressable>
+        <View style={{ flex: 1 }}>
+          <Text
+            style={{ textDecorationLine: task.done ? 'line-through' : 'none' }}
+          >
+            {task.title}
+          </Text>
+          <Muted>
+            {task.priority} priority{task.due ? ` · ${task.due}` : ''}
+          </Muted>
+        </View>
+      </View>
+      {!!task.notes && <Muted>{task.notes}</Muted>}
+      <View style={{ flexDirection: 'row', gap: 8 }}>
+        <Button label="Edit" secondary onPress={onEdit} />
+        <Button
+          label="Delete"
+          secondary
+          disabled={busy}
+          onPress={() =>
+            Alert.alert(
+              'Delete task?',
+              'Session history is kept without this task link.',
+              [
+                { text: 'Cancel', style: 'cancel' },
+                {
+                  text: 'Delete',
+                  style: 'destructive',
+                  onPress: () => void run((db) => deleteTask(db, task.id)),
+                },
+              ],
+            )
+          }
+        />
+      </View>
+    </Card>
+  );
+}

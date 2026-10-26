@@ -1,2 +1,47 @@
-import { useData } from '../../providers/DataProvider';import { Screen } from '../../components/Screen';import { Card } from '../../components/Card';import { Text,Muted } from '../../components/Text';import { WeekChart } from '../../components/WeekChart';import { weekly,completedToday } from './metrics';
-export function InsightsScreen(){const {data}=useData();const d=data!,days=weekly(d.sessions);return <Screen title="Summary" subtitle="See the time you made for yourself."><Card><Text style={{fontSize:28,lineHeight:36}}>{days.reduce((a,d)=>a+d.minutes,0)} min</Text><Muted>Focus over the last seven days · daily goal {d.settings.goal} min</Muted><WeekChart days={days}/></Card><Text style={{fontWeight:'600'}}>Highlights</Text><Card><Text>{completedToday(d.tasks)} tasks completed today</Text><Muted>{d.sessions.length} completed focus sessions in total</Muted></Card><Text style={{fontWeight:'600'}}>Recent sessions</Text>{d.sessions.slice(0,20).map(s=><Card key={s.id}><Text>{d.tasks.find(t=>t.id===s.task_id)?.title??'Free focus'}</Text><Muted>{s.day} · {Math.round(s.seconds/60)} min · {new Date(s.ended_at).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</Muted></Card>)}{!d.sessions.length&&<Muted>Your first completed focus session will appear here.</Muted>}</Screen>;}
+import { useData } from '../../providers/DataProvider';
+import { Screen } from '../../components/Screen';
+import { Card } from '../../components/Card';
+import { Text, Muted } from '../../components/Text';
+import { WeekChart } from '../../components/WeekChart';
+import { weekly, completedToday } from './metrics';
+export function InsightsScreen() {
+  const { data } = useData();
+  const d = data!,
+    days = weekly(d.sessions);
+  return (
+    <Screen title="Summary" subtitle="See the time you made for yourself.">
+      <Card>
+        <Text style={{ fontSize: 28, lineHeight: 36 }}>
+          {days.reduce((a, d) => a + d.minutes, 0)} min
+        </Text>
+        <Muted>
+          Focus over the last seven days · daily goal {d.settings.goal} min
+        </Muted>
+        <WeekChart days={days} />
+      </Card>
+      <Text style={{ fontWeight: '600' }}>Highlights</Text>
+      <Card>
+        <Text>{completedToday(d.tasks)} tasks completed today</Text>
+        <Muted>{d.sessions.length} completed focus sessions in total</Muted>
+      </Card>
+      <Text style={{ fontWeight: '600' }}>Recent sessions</Text>
+      {d.sessions.slice(0, 20).map((s) => (
+        <Card key={s.id}>
+          <Text>
+            {d.tasks.find((t) => t.id === s.task_id)?.title ?? 'Free focus'}
+          </Text>
+          <Muted>
+            {s.day} · {Math.round(s.seconds / 60)} min ·{' '}
+            {new Date(s.ended_at).toLocaleTimeString([], {
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
+          </Muted>
+        </Card>
+      ))}
+      {!d.sessions.length && (
+        <Muted>Your first completed focus session will appear here.</Muted>
+      )}
+    </Screen>
+  );
+}

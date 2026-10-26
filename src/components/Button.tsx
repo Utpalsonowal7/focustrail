@@ -1,3 +1,37 @@
-import { Pressable,ActivityIndicator } from 'react-native';import { Text } from './Text';import { colors } from '../theme/tokens';
-export function Button({label,onPress,secondary=false,disabled=false}:{label:string;onPress:()=>void;secondary?:boolean;disabled?:boolean}){return <Pressable accessibilityRole="button" accessibilityLabel={label} accessibilityState={{disabled}} disabled={disabled} onPress={onPress} style={({pressed})=>({backgroundColor:secondary?colors.raised:colors.purple,padding:14,borderRadius:14,alignItems:'center',opacity:pressed||disabled?.5:1,minHeight:48})}><Text style={{fontWeight:'600'}}>{label}</Text></Pressable>;}
-export function Loading(){return <ActivityIndicator color={colors.lavender} size="large"/>;}
+import { Pressable, ActivityIndicator } from 'react-native';
+import { Text } from './Text';
+import { colors } from '../theme/tokens';
+export function Button({
+  label,
+  onPress,
+  secondary = false,
+  disabled = false,
+}: {
+  label: string;
+  onPress: () => void;
+  secondary?: boolean;
+  disabled?: boolean;
+}) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      accessibilityState={{ disabled }}
+      disabled={disabled}
+      onPress={onPress}
+      style={({ pressed }) => ({
+        backgroundColor: secondary ? colors.raised : colors.purple,
+        padding: 14,
+        borderRadius: 14,
+        alignItems: 'center',
+        opacity: pressed || disabled ? 0.5 : 1,
+        minHeight: 48,
+      })}
+    >
+      <Text style={{ fontWeight: '600' }}>{label}</Text>
+    </Pressable>
+  );
+}
+export function Loading() {
+  return <ActivityIndicator color={colors.lavender} size="large" />;
+}
