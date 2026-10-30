@@ -122,7 +122,3 @@ Tests run the repository SQL against Node's real SQLite engine with a small adap
 ## Current scope
 
 This first version includes offline tasks, daily habits, a durable focus timer and local analytics. Cloud sync, reminder notifications, backup restore, custom habit schedules, app-blocking/screen-time monitoring, light theme and store releases are future work. All records are loaded into memory for a personal-use dataset; pagination is a future improvement for very large histories.
-
-## Contributing
-
-Read [CONTRIBUTING.md](CONTRIBUTING.md), keep feature code modular, and add meaningful tests when changing persistence or timer behavior. No application code license has been selected yet.
